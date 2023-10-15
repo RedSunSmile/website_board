@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+ <link rel="stylesheet" href="/resources/css/spring.css">
+</head>
+<body>
+	<form th:action="@{/gallery/summer}" method="get">
+	<table>
+	<tr>
+			<td><section class="visual"  onclick="ThreeSeason()">
+			<img src="/resources/menu/Title.png" style="width:400px; height:92px;"></section></td>
+			<td><a href="/admin/index">홈페이지메인</a></td>
+	</tr>
+					<tr>
+					    <td><img src="/resources/summer/SAM_0122.JPG"></td>
+					    <td><img src="/resources/summer/SAM_0181.JPG"></td>
+					</tr>
+					<tr>
+					    <td><img src="/resources/summer/SAM_0190.JPG"></td>
+					      <td><img src="/resources/summer/SAM_0206.JPG"></td>
+					</tr>
+					<tr>
+					    <td><img src="/resources/summer/SAM_0219.JPG"></td>
+					      <td><img src="/resources/summer/SAM_0257.JPG"></td>
+					</tr>
+	<tr>
+		<td>
+		<p class="p" style="text-align:center;margin-left:100px;">날씨 정보 업데이트 일시 중단 안내 (4/8 10:00~14:00)</p>
+		<p class="p" style="text-align:center;margin-left:100px;">회사소개인재채용제휴제안이용약관개인정보처리방침청소년보호정책네이버 정책고객센터ⓒ Three Season Corp.</p>
+		<p class="p" style="text-align:center;margin-left:100px;">Copyright &copy; Three Season Website 2023</p>
+		</td>
+	</tr>	
+
+</table>
+	</form>
+</body>
+<script type="text/javascript">
+function ThreeSeason() {
+	location.href = "//localhost:7000/admin/index";
+}
+	</script>
+
+</html>

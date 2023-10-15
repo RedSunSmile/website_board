@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head profile="http://www.w3.org/2005/10/profile">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<th:block th:each="goods:${cart}">
+	Name : [[${goods.name}]], P_Price : $[[{goods.p_price}]], Num : ${goods.p_num, 	Sum:[[${goods.sum}]]  
+ 
+	<br/>
+</th:block>
+</body>
+</html>

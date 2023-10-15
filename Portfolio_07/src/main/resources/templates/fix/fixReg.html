@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="/resources/css/reg.css">
+ 
+  
+</head>
+<body>
+       <table>
+          <form role="form" th:action="@{/fix/fixReg}" method="post">
+          <tr><td><th style="text-align: right">글쓰기</td></th></tr>
+         <tr>
+         	<td><label>제목</label>
+         	<input type="text" class="form-control" id="title" name="title" placeholder="title" required></td>
+          </tr>
+          <tr>
+              <td>내용<textarea style="border: 1px solid #c9c1ef;"name="content" placeholder="content" maxlength="140" rows="7"></textarea></td>
+           </tr>
+            <tr>
+			<td><label>작성자</label>
+			<input type="text" name="regId" class="form-control"></td>
+			</tr>
+			<tr>
+			<td><label>작성시간</label>
+			<input type="datetime-local" name="regDt" class="form-control"></td>
+			</tr>
+			<tr>
+			<td><label>접속상태</label>
+			<input type="radio" name="useYn" class="form-control" value="Y" checked></td>
+            <td><button style="background-color:#AAFA82;color:white;"type="submit" id="submit" name="submit">Submit Form</button></td>
+          	<td><a th:href="@{/notice/list}" style="text-decoration-line:none;text-align:center;">목록</a></td>
+          	</tr>
+          </form>
+
+   
+   <tr>
+   <td><th style="text-align: right"> upload & download</th></td>
+   </tr>
+
+		<tr>
+	<form method="POST" action="/fix/upload" enctype="multipart/form-data">
+ 
+ 		<td ><span>Upload</span>
+       	<input name="file" type="file" style="border-radius:7%;width:300px;font-size:20px;color:white"></td>
+      			<td><label>Choose file</label>
+     			<button style="background-color:#AAFA82;color:white;" type="submit" name="submit">Submit</button></td> 
+         </tr>
+           
+
+         <div class="form-group row">
+            <div th:if="${warning}">
+               <div class="alert alert-warning" role="alert">
+                  <h4 th:text="${warning}"></h4>
+               </div>
+            </div>
+            <div th:if="${message}">
+               <div class="alert alert-success" role="alert">
+                  <h4 th:text="${message}"></h4>
+               </div>
+            </div>
+            <div th:if="${error}">
+               <div class="alert alert-danger" role="alert">
+                  <h4 th:text="${error}"></h4>
+               </div>
+            </div>
+         </div>
+      </form>
+ 
+   
+            <tr>
+               <th>File Name</th>
+            </tr>
+         <tbody>
+            <tr th:each="list : ${list}">
+               <td th:text="${list}"></td>
+               <td><a
+   th:href="@{http://localhost:7000/fix/download/{name}">
+   <button type="button" class="btn btn-success btn-sm">Download</button>
+               </a></td>
+
+               <td><a th:href="@{http://localhost:7000://fix/delete">
+            <input name="name" type="hidden" th:value="${list}" />
+           <button type="submit" class="btn btn-danger btn-sm">
+                        &nbsp;Delete&nbsp;</button></a></td>
+
+              <td>	<a th:href="@{/fix/list}">홈 화면</a></td>
+            </tr>
+         </tbody>
+      </table>
+
+<br>
+<br>
+  
+  
+</html>

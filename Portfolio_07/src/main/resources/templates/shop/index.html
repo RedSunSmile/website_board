@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<head>
+	<title>OracleJava Community Spring4 MVC Cart</title>
+</head>
+<body onload="init();">
+<h1>
+	OracleJava Community Spring4 MVC Cart
+</h1>
+
+	<th:block th:each="goods:${cart}">
+	Name : [[${goods.name}]], P_Price : $[[{goods.p_price}]], Num : ${goods.p_num, 	Sum:[[${goods.sum}]]  
+ 
+	<br/>
+</th:block>
+<br><br>
+<h1>Add Cart...</h1>
+<form method="get" name="form" action="/shop/cartDisplay">
+	GoodsNo:<input type="text" name="goodsNo" value="28"><br>
+	GName  : <input type="text" name="gname" value="ads-209"><br>
+	p_price: <input type="text" name="p_price" value="50000"><br>
+	p_num   : <input type="text" name="amount" value="1" size="3" onchange="change();"> 
+			<input type="button" value=" + " onclick="add();"><input type="button" value=" - " onclick="del();"><br>
+			<input type="hidden" name="sum" size="11" readonly>
+	sum:<div id="sum"></div>원
+	<button>Add Goods...</button>
+</form>
+</body>
+<body onload="init();">
+<script language="JavaScript">
+var p_price;
+var amount;
+
+function init () {
+    p_price = document.form.p_price.value;
+    amount = document.form.amount.value;
+    document.form.sum.value = p_price;
+    change();
+}
+
+function add () {
+    hm = document.form.amount;
+    hm.value ++ ;
+
+    var sum_ = parseInt(hm.value) * p_price;
+document.getElementById("sum").innerHTML=sum_;
+}
+
+function del () {
+    hm = document.form.amount;
+        if (hm.value > 1) {
+            hm.value -- ;
+            var sum_ = parseInt(hm.value) * p_price;
+document.getElementById("sum").innerHTML=sum_;
+        }
+}
+
+function change () {
+    hm = document.form.amount;
+
+        if (hm.value < 0) {
+            hm.value = 0;
+        }
+    var sum_ = parseInt(hm.value) * p_price;
+document.getElementById("sum").innerHTML=sum_;
+} 
+//-->
+</script>
+
+<!-- <form name="form" method="get">
+수량 : <input type=hidden name="p_price" value="5500">
+<input type="text" name="amount" value="1" size="3" onchange="change();"> 
+<input type="button" value=" + " onclick="add();"><input type="button" value=" - " onclick="del();"><br>
+<input type="hidden" name="sum" size="11" readonly>
+금액 : <div id="sum"></div>원
+</form> -->
+</body>
+
+</html>

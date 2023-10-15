@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	 <link rel="stylesheet" href="/resources/css/reg.css">
+
+</head>
+<body>
+	
+	<form th:action="@{/member/signup}" method="post">
+	<table>
+	<tr> 
+		<td style="text-align:right;"><h3>회원가입</h3></td>
+
+	</tr>
+	<tr> 
+		<td>아이디 : <input id="id" type="text" name="id" value=""></td>
+		<td><button style="background-color:#C12DFF;color:white;"type="button" id="idCheck">아이디 중복체크</button></td>
+	</tr>
+	<tr>
+	<!--id나 name은 속성을 가지고 있기때문에 속성과 똑같은 이름은 피하도록 하자!!!  -->
+		<td>비밀번호 : <input id="password" type="password" name="password" value=""></td>
+		<br>
+		<td>비밀번호 확인 : <input id="passwordRe" type="password" value=""></td>
+	</tr>
+	<tr>
+		<td>이름	: <input id="name"  type="text" name="name" value=""></td>
+	</tr>
+	<tr>
+		<td>이메일 : <input id="email" name="email" value=""></td>
+	</tr>
+	<tr>
+		<td>주소 : <input id="address" type="text" name="address" value=""></td>
+	</tr>
+	<tr>
+	<td><button  style="background-color:#80E12A;color:white;" type="button" id="signUpBtn" onClick="location.href='index'">회원가입</button></td>
+	<td>
+	 <td>
+		<a th:href="@{/member/list}"style="text-decoration-line:none;">목록</a>
+	  </td>
+	 <td>
+		<a th:href="@{/admin/index}"style="text-decoration-line:none;">홈메인으로가기</a>
+	  </td>
+	</tr>
+	</table>
+	</form>
+	</body>
+
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.4/dist/simple-notify.min.js"></script>
+	
+<script>
+	$(document).ready(function(e){
+		/* #passworedRe 앞에는 name이름과 맞춰준다  앞에첫자를 대문자로 했다면 대문자로 소문자로 했다면 소문자로 맞춰준다*/
+		$("#passwordRe").on('blur', function(){
+		if($("#password").val() && $(this).val() !=''){
+			if($("#password").val() == $(this).val()){
+				$("#checko").css("display", "block");
+				$("#checkx").css("display","none");
+			}else{
+				$("#checko").css("display", "none");
+				$("#checkx").css("display", "block");
+			}
+		}else{
+			$("checko").css("display", "block");
+			$("checkx").css("display", "block");
+			}
+		});
+	});
+</script>
+
+<script>
+/* 회원가입 읽기동작*/
+	$ (document).ready(function(e){
+		$("#signUpBtn").on("click", function(e){
+			var data={
+					/* #passworedRe 앞에는 name이름과 맞춰준다  앞에첫자를 대문자로 했다면 대문자로 소문자로 했다면 소문자로 맞춰준다*/
+				id			: $("#id").val(), //컨트롤러에 넘기는 이름 : 입력된 데이터
+				password 	: $("#password").val(),
+				email		: $("#email").val(),
+				name		: $("#name").val(),
+				address		: $("#address").val(),
+				regDt		: $("#regDt").val(),
+			}
+			console.log(data);
+			e.preventDefault();
+			
+				$.ajax({
+					type : 'post',
+					url  : "/member/signup", //url호출주소 맞춰주기 안맞어서 에러날수있음
+					dataType : 'json',
+					 contentType : "application/json; charset=utf-8",
+					data : JSON.stringify(data),
+					success: function(result){
+						}
+				});
+			});
+	});
+		
+</script>
+<!--회원가입 아이디 중복체크  -->
+<script>
+	$(document).ready(function(e){
+		$("#idCheck").on("click", function(e){
+			e.preventDefault();
+			var data={id :$("#id").val()}
+			
+			$.ajax({
+				type : 'post',
+				url : "/member/idCheck", //url호출주소 맞춰주기 안맞어서 에러날수있음
+				dataType : 'json',
+				contentType : "application/json; charset=utf-8",
+				data : JSON.stringify(data),
+				success : function(result) {
+					if(result !=0){
+						alert("아이디가 있습니다");
+					}else{
+						alert("사용 가능한 아이디 입니다");
+						idCheckId = true;
+					}
+				},
+				error : function(e) {
+					alert("서버 처리중 에러가 발생했습니다");
+				}
+			});
+		});
+	});
+</script>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>Products Page</h3>
+	<table cellpadding="2" cellspacing="2" border="1">
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Photo</th>
+			<th>Price</th>
+			<th>Buy</th>
+		</tr>
+		<th:block th:each="product:${products}">
+			<tr>
+				<td>[[${product.id }]]</td>
+				<td>[[${product.name }]]</td>
+				<td><img src="${pageContext.request.contextPath }/resources/http://learningprogramming.net/wp-content/uploads/java/spring_mvc/${product.photo }" width="50"></td>
+				<td>[[${product.price }]]</td>
+				<td align="center">
+					<a href="/cart/buy/${product.id}">Buy Now</a>
+				</td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>

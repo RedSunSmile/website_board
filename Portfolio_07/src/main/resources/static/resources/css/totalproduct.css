@@ -1,0 +1,25 @@
+@charset "UTF-8";
+#wrap{
+				width:1600px;
+				height:2000px;
+				border:10px solid lightgray;
+				margin:0px;
+				padding:0;
+	
+				
+			}
+			table1 li{
+				float:left;
+				padding:10px;
+				list-style:none;
+				color:gray;
+				margin-top:10px;
+			
+			}
+	table img{
+		border-radius:10%;
+		width:500px;
+		height:375px;
+		margin:50px;
+	
+	}

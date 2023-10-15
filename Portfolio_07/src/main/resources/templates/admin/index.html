@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head profile="http://www.w3.org/2005/10/profile">
+
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+  	<th:block th:replace="~{fragments/style ::styleFragment}" ></th:block>
+  	
+</head>
+<body>
+	<form action="/admin/index" method="get">	
+	<div id="wrap">
+		
+			<div class="box1"  >
+				<nav class="navi">
+				<ul class="menu">
+							<li>
+							<img src="/resources/menu/Title.png">	
+							</li>
+							<li>
+							<a href="#">제품목록</a>	
+							<ul class="product_1">
+								<li><a th:href="@{/product/chair}">의자</a></li>
+								<li><a th:href="@{/pergola/pergola}">파고라</a></li>
+								<li><a th:href="@{/product/playground}">놀이기구</a></li>
+								<li><a th:href="@{/product/box}">흡연부스</a></li>
+								<li><a th:href="@{/product/tree}">수목보호대</a></li>
+					
+							</ul>
+						</li>	
+					<li>
+							<a href="#">갤러리</a>
+							<ul class="product_2">
+								<li><a th:href="@{/gallery/spring}">봄</a></li>
+								<li><a th:href="@{/gallery/summer}">여름</a></li>
+							</ul>
+					</li>
+					<li>
+							<a href="#">공지사항</a>
+							<ul class="product_3">
+								<li><a href="/notice/list">설치문의</a></li>
+								<li><a href="/exchangestop/list">호환 & 단종제품</a></li>
+								<li><a href="/fix/list">a/s접수</a></li>
+								<li><a href="/complain/list">고객불만사항</a></li>
+							</ul>
+					</li>
+					<li>
+							<a href="logout.do">고객관리</a>
+							<ul class="product_4">
+								<li><a href="/member/signup">회원가입</a></li>
+								<li><a href="/member/list">회원수정&삭제</a></li>
+							</ul>
+					</li>			
+					<li>
+							<th:block th:if="${session.admin==null}">
+							<a href="/admin/adminlogin">로그인</a>
+							</th:block>
+							<th:block th:if="${session.admin !=null}"> 
+							<a href="/admin/logout">로그아웃</a>
+							</th:block> 
+					</li>
+				
+				</ul>		
+						<div class="slide_wrapper">
+						<table>
+							<tr>
+							<ul class="slides">
+								<li><img src="/resources/img/652-400.jpg">slide01</li> 
+					 			<li><img src="/resources/img/Arc_400.jpg">slide02</li> 
+								<li><img src="/resources/img/Arc_fence400-1.jpg">slide03</li>
+								<li><img src="/resources/img/Arc_fence400-2.jpg">slide04</li>
+								<li><img src="/resources/img/gl-719b-400.jpg">slide04</li>
+								<li><img src="/resources/img/GL-720-400.jpg">slide05</li>
+								<li><img src="/resources/img/Arc_400-3.jpg">slide06</li>
+								<li><img src="/resources/img/gl-825b-400.jpg">slide07</li>
+								<li><img src="/resources/img/gpl-901-400.jpg">slide08</li>
+							</ul>
+							</tr>
+							</table>
+						</div>
+					<p class="controls">
+							<span class="prev">prev</span>
+							<span class="next">next</span>
+						</p> 
+						</div>
+					</ul>
+				</nav>
+		
+	<div class="box2" >
+		<ul  id="opt1" >
+		<li>
+			<a th:href="@{/notice/list}">제품설치문의</a>	
+			<a th:href="@{/fix/list}">A/S접수</a>	
+			<a th:href="@{/product/best}">Best제품</a>
+			<a th:href="@{/product/new}">신제품</a>
+				<img src="/resources/menu/chat_FILL0_wght400_GRAD0_gray.png">
+				<img src="/resources/menu/construction_FILL0_wght400_opsz48_gray.png">
+				<img src="/resources/menu/fiber_new_FILL0_wght400_GRAD0_opsz48-1.png">
+				<img src="/resources/menu/temp_preferences_custom_FILL0_opsz48_gray.png">
+		</li>
+		</ul>
+	<div class="box3" >
+	<ul  id="opt2" >
+	<li>
+		<a th:href="@{/pergola/pergola}">가성비제품</a>
+		<img src="/resources/img/ADSB-04-300.jpg">
+		<img src="/resources/img/ADSB-05-300.jpg">
+		<img src="/resources/img/ADSB-06-300.jpg">
+		<img src="/resources/img/Adsb-09-300.jpg">
+	</li>
+		<li>
+		<a th:href="@{/product/playground}">호환되는제품</a>
+		<img src="/resources/play/AP-53(하베)1.jpg">
+		<img src="/resources/play/AP-40-2.jpg">
+		<img src="/resources/play/AP-75(주노).jpg">
+		<img src="/resources/play/AP-92(노보)1.jpg">
+	</li>
+	</ul>
+<th:block th:replace="~{fragments/script}"></th:block>
+<script th:src="@{/resources/js/slidestyle.js}"></script>
+<!--  	 <th:block th:replace="~{fragments/footer ::footerFragment}"></th:block> -->
+		<div class="copyright text-center my-auto">
+		<p 	style="margin-left:100px">날씨 정보 업데이트 일시 중단 안내 (4/8 10:00~14:00)</p>
+		<p>회사소개인재채용제휴제안이용약관개인정보처리방침청소년보호정책네이버 정책고객센터ⓒ Three Season Corp.</p>
+
+			<span>Copyright &copy; Three Season Website 2023</span>
+		</div>
+  </div>	
+</div>	 <!-- 맨바깥프레임선 -->
+ 	</form>
+
+</body>
+	
+</html>

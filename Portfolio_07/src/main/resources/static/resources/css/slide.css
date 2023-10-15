@@ -1,0 +1,57 @@
+@charset "UTF-8";
+/*메인옆으로돌기사진 전체길이조정  */
+ .slide_wrapper{
+	width:1200px;
+ 	height:300px; 
+	margin-top:-15px;
+	position: relative;
+	margin: 0 auto;
+	overflow:hidden;
+	margin-left:-10px;
+}
+
+.slides{
+	position:absolute; 
+	left:0;
+	top:0;
+	z-index:-1;
+}
+
+.slides .animated{
+	transition: 0.5s ease-out;
+}
+
+.slides li{
+	width:400px;
+ 	height:300px; 
+	background:#ccc; 
+	float:left;
+	list-style:none;
+	
+}
+
+.slides li:not(:last-childe){
+	margin-right:150px;
+}
+
+.controls{
+	text-align:center;
+	font-size:15px;
+	margin-top:30px;
+	margin-left:-400px;
+	
+}
+
+.controls span{
+	border:1px solid #c9c1ef;
+	border-radius:10%;
+	padding:10px 20px;
+	margin:0 10px;
+	
+} 
+img{
+	width:400px;
+	height:300px;
+
+}		
+		

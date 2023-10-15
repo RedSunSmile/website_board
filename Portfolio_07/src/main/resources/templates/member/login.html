@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>관리자 회원로그인창</title>
+</head>
+<body>
+	
+	<form action="/member/login" method="post" >
+		 <input id="loginId" type="text" name="id" value="" placeholder="아이디">
+		 <input id="loginPw" type="password" name="password" value="" placeholder="비밀번호">
+		<input type="submit" id="loginBtn" value="로그인">        
+		<button type="button" onClick="location.href='signup'">회원가입</button>
+	</form>
+
+</body>
+<script>
+	window.onload=function(){
+		let msg= '[[${msg}]]';
+		
+		if(msg !=''){
+			alert(msg);
+		}
+		
+	}
+</script>
+</html>

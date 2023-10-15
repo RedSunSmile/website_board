@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.co.kr.notice.NoticeMapper">
+	
+<!-- 페이징 처리 전체 개수 파악  -->
+	<select id="getNoticeTotalCount" parameterType="com.co.kr.notice.dto.SearchDto" resultType="int">
+	<![CDATA[
+		select 
+			count(*) 
+		from 
+			notice 
+		where
+			1=1
+			and notice.use_yn = 'Y'
+			and (
+						notice.title like concat('%', #{searchText}, '%')
+					or  notice.reg_id like concat('%', #{searchText}, '%')
+					or  notice.content like concat('%', #{searchText}, '%')
+			)
+	]]>
+	</select>
+	
+	<!-- 페이징 처리 목록 검색 -->
+	<select id="getNoticeList" parameterType="com.co.kr.notice.dto.SearchDto" resultType="com.co.kr.notice.dto.NoticeDto">
+	<![CDATA[
+		select 
+			@rownum:=@rownum+1 as 'rowNum'
+			, notice.idx
+			, notice.title
+			, date_format(notice.reg_dt, '%Y-%m-%d %H:%i:%s') as 'regDt'
+			, notice.reg_id as 'regId'
+			, notice.content
+		from 
+			notice, (select @rownum :=0) r 
+		where
+			1=1
+			and notice.use_yn = 'Y'
+			and (
+						notice.title like concat('%', #{searchText}, '%')
+					or  notice.reg_id like concat('%', #{searchText}, '%')
+					or  notice.content like concat('%', #{searchText}, '%')
+			)
+		order by idx desc	
+		limit #{startNum}, #{listCount}
+	
+	]]>
+	</select>
+	
+	<!-- 공지사항등록 -->
+	<insert id="insertNotice" parameterType="com.co.kr.notice.dto.NoticeDto">
+	<![CDATA[
+		insert into notice 
+		(
+			 title
+			,content
+			,reg_dt
+			,reg_id
+			,use_yn
+			)
+		values
+		(
+			
+			 #{title}
+			,#{content}
+			,now()
+			,#{regId} 
+			,#{useYn}
+		)
+	]]>		
+	</insert>
+	
+	<!-- 공지사항 수정읽기 -->
+	<select id="readNotice" resultType="com.co.kr.notice.dto.NoticeDto">
+	<![CDATA[
+		select title, content, regId, regDt
+		from notice
+		where idx=#{idx}
+	]]>
+	</select>
+	
+	<!--공지사항 조회(상세보기)  -->
+	<select id="getNoticeSee" parameterType="Long" resultType="com.co.kr.notice.dto.NoticeDto">
+	<![CDATA[
+			select 
+				  idx
+				, title
+				, content
+				, reg_id as 'regId'
+				, reg_dt as 'regDt'
+				, use_yn as 'useYn'
+			from
+				notice
+			where 
+				idx=#{noticeIdx}
+				-- and use_yn='Y'
+	]]>
+	</select>
+	<!--  공지사항 수정-->
+	<update id="updateNotice" parameterType="com.co.kr.notice.dto.NoticeDto">
+	<![CDATA[
+		UPDATE
+			notice
+		SET
+			title=#{title}
+			, content=#{content}
+			, mod_dt=#{modDt}
+			, mod_id=#{modId}
+		WHERE
+			idx=#{idx}
+	]]>
+	</update>
+	
+	<!--공지사항 지우기  -->
+	<update id="deleteNotice" parameterType="com.co.kr.notice.dto.NoticeDto">
+	<![CDATA[
+		update
+			notice
+		set
+			mod_dt= #{modDt}
+		,	mod_id= #{modId}
+		, 	use_yn= #{useYn}
+		WHERE
+			idx= #{idx}
+	]]>
+	</update>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertReply" parameterType="com.co.kr.notice.dto.ReplyDto">
+		<![CDATA[
+		INSERT INTO reply(
+					reply
+				, 	reg_id
+				,	reg_dt
+				, 	notice_idx
+				,	use_yn
+				)
+		VALUES(
+					#{reply}
+				,	#{regId}
+				,	now()
+				,	#{noticeIdx}
+				,	'Y'
+			)
+				
+		]]>
+	</insert>
+	
+	<!--댓글 목록  -->
+	<select id="readReply" resultType="com.co.kr.notice.dto.ReplyDto">
+	<![CDATA[
+		SELECT
+				idx
+			,	reply
+			,	reg_id as regId
+			,	reg_dt as regDt
+			, 	notice_idx as 'noticeIdx'
+		FROM
+				reply
+		WHERE
+				notice_idx = #{noticeIdx}
+			and use_yn = 'Y'
+		ORDER BY
+				idx desc
+	]]>
+	</select>
+	<!-- 댓글 수정 -->
+	<update id="updateReplyByReplyIdx" parameterType="com.co.kr.notice.dto.ReplyDto">
+	<![CDATA[
+		UPDATE
+				reply
+		SET
+				reply =#{reply}
+			,	mod_id=#{modId}
+			,	mod_dt=#{modDt}
+		WHERE
+				idx=#{idx}
+	]]>
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply" parameterType="com.co.kr.notice.dto.ReplyDto">
+	<![CDATA[
+		UPDATE
+				reply
+		SET
+				use_yn=#{useYn}
+			,	mod_id=#{modId}
+		WHERE
+				idx= #{idx}
+	]]>
+	</update>
+	
+</mapper>

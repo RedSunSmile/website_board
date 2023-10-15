@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/resources/css/productmenu.css">
+</head>
+<body>
+
+<p>오픈준비중입니다. 곧 개편하겠습니다</p>
+<!-- <form th:action="@{/pergola/pergola}" method="get">
+<table class="first" border="1">
+	<tr>
+		<td colspan="6"></td>
+	</tr>
+	<tr>
+		<td rowspan="10"><img src="/resources/pergola/adsb-09-200.jpg"></td>
+	</tr>
+	<tr>
+		<td>야외 흔들그네 휴식용 파고라</td>
+	</tr>
+	<tr>
+		<td>30% 2,000,000</td>
+	</tr>
+	<tr>
+		<td colspan="20">택배 상품 1개당 7000원</td>
+	</tr>
+	<tr>
+		<td>우수회원 최대 1.5%적립</td>
+	</tr>
+	<tr>
+		<td>기타국가</td>
+	</tr>
+	<tr>
+		<td>혜택 </td>
+	</tr>
+	<tr>
+		<td>청구할인6%/무이자 할부/인터파크 롯데카드 할인</td>
+	</tr>
+	<tr>
+		<td>배송비 결제</td>
+		<td><select id="pergola" name="pergola">
+			<option value="">**선택하세요**</option>
+			<option value="swing01">adsb-08(나무흔들벤치)</option>
+			<option value="swing02">adsb-09(하트흔들벤치)</option>
+			<option value="cube01">adsb-04(싱글큐브파고라)</option>
+			<option value="cube02">adsb-05(더블큐브파고라)</option>
+			<option value="zigag01">adsb-06(지그재그파고라)</option>
+			<option value="zigzag02">adsb-06-1(지그재그파고라2)</option>
+			<option value="round1">adsb-07-01(라운드형파고라1)</option>
+			<option value="round2">adsb-07-02(라운드형파고라2)</option>
+			<option value="oldround1">ads-122(기성라운드)</option>
+			<option value="oldcubside">ads-120(기성박스기둥파고라)</option>
+			<option value="oldtwist">ads-116(기성트위스트형파고라)</option>
+		</select></td>
+		<tr>
+		<td>구매수량</td>
+		</tr>
+	</tr>
+	<tr>
+		<td></td><td>상품금액합계</td><td colspan="2">12345678</td>
+	</tr>
+	<tr>
+		<td></td><td>장바구니</td><td colspan="2">바로구매</td>
+	
+	</tr>
+	<tr>
+		<td colspan="3">지금 보는 상품과 비슷한 상품이에요</td>
+	</tr>
+	<tr>
+		<td><img src="/resources/pergola/ADSB-05-2020.jpg"></td>
+		<td><img src="/resources/pergola/ADSB-06-(2).jpg"></td>
+		<td><img src="/resources/pergola/adsb-07-001.jpg"></td>
+		<td><img src="/resources/pergola/adsb-07-004.jpg"></td>
+		<td><img src="/resources/pergola/adsb-09-200.jpg"></td>
+		<td><img src="/resources/pergola/ADS-116-1.jpg"></td>
+	</tr>
+	
+	<tr>
+	
+		<td>상품 설명</td><td>리뷰</td><td>Q/A</td><td>판매자정보</td>
+	</tr>
+	<tr>
+		<td rowspan="2"><p>하트를 모티브로 디자인</p></td>	
+		
+	</tr>
+	<tr>
+	<td rowspan="10"><img src="/resources/pergola/ADSB-09(설명).jpg"></td>
+	</tr>
+	<tr>
+		<td colspan="20">편하게 쉴수 있는 쉼터같은 그네</td>
+	</tr>
+	<tr>
+		<td>50개 한정 생산</td>
+	</tr>
+	<tr>
+		<td>많은 업체에서 찾고 있는 제품중의 하나</td>
+	</tr>
+	<tr>
+		<td>1.여유스러움과 긴장감을 나무위치 배열에 녹이는 한편 빨간색을 더하여 하트가 가진 특성을 강조</td>
+	</tr>
+	<tr>
+		<td>양쪽 끝파이프 100X50으로 가운데 파이프는 100X100으로 적용하여 그네가 달리는 위치의 견고함을 보강</td>
+	</tr>
+	<tr>
+			<td>기존 가운데 들어가는 원형을 제외하면서 하트 본연의 느낌을 최대한 살리는 한편 원가절감</td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+		
+</table>
+<table class="second" border="1">
+	<tr>
+		<td>상품리뷰</td>	
+	</tr>
+	<tr>
+		<td><input type="text" placeholder="작성된 리뷰가 없습니다" style="width:700px;height:100px;">
+		</td>	
+	</tr>
+	<tr>
+		<td>반품/교환안내</td>	
+		<td>반품배송비<td><td>편도 0원 (최초 배송비 무료인 경우 0원 부과)</td>
+		<td>교환배송비</td><td>0원</td>
+
+	</tr>
+	<tr>
+		<td>보내실 곳<td><td>(05842) 서울특별시 송파구 송파대로 55(난닝구동) D동 거북이층
+		<td>반품/교환사유에 따른 요청 가능 기간</td>
+		<td>반품/교환 시 먼저 판매자와 연락하여 협의 후 반품접수를 해주셔야 하며, 반품접수 없이 임의로 보낼 경우 환불이 불가할 수 있으니 유의하시기 바랍니다.</td>
+		<td>1. 구매자 단순 변심은 상품 수령 후 7일 이내(구매자 반품배송비 부담)</td>
+		<td>2. 표시/광고와 상이, 상품하자의 경우 상품 수령 후 3개월 이내 혹은 표시/광고와 다른 사실을 안 날로부터 30일 이내 (판매자 반품배송비 부담) 둘 중 하나 경과 시 반품/교환 불가</td>
+	</tr>
+		<tr>
+		<td>판매자정보</td>	
+	</tr>
+	<tr>
+	<td>판매자	마켓임당	상호명/대표자	(주)비디퓨 │ 황동훈,김혜선
+사업자구분	법인사업자	고객문의 대표번호	02-6337-9792
+사업자등록번호	6148602039	통신판매업신고	2021-서울영등포-0955
+E-Mail	bdfu.sun@gmail.com	고객문의 가능시간	10시 ~ 18시 (점심시간, 토요일, 일요일, 공휴일 제외)
+영업소재지	서울특별시 영등포구 문래북로 116 (문래동3가,트리플렉스) 7층 706호</td>
+	</tr>
+</table>
+</form>
+ -->
+ 
+</body>
+</html>

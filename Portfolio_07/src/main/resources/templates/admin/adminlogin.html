@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>관리자페이지</title>
+
+</head>
+<body>
+
+	<form method="post" action="/admin/adminlogin"> 
+		<div>
+			 <input id="adminId" type="text" name="adminId" value="" placeholder="아이디">
+			 <input id="adminPass" type="password" name="adminPass" value="" placeholder="비밀번호">    
+	<!-- 		 <input id="loginname" type="hidden" name="name" value=""> -->
+			 <input type="submit" id="loginBtn" value="로그인">
+		
+		</div>
+	</form> 
+</body>
+
+<!--로그인 실패나 성공시 메시지를 받아서 출력하는 자바스크립트 구문  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+		window.onload=function(){
+			let msg='[[${message}]]';
+			
+			if(msg!=''){
+				alert(msg);
+			}
+		}
+</script>
+</html>

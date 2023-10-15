@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form th:action="@{/cart/index}" method="get">
+<h3>Cart Page</h3>
+	<table cellpadding="2" cellspacing="2" border="1">
+		<tr>
+			<th>Option</th>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Photo</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Sub Total</th>
+		</tr>
+	
+		<th:with="total=${0}"></th:with>
+			<th:block th:each="item:${sessionScope.cart }">
+			<th:with="total=${total + item.product.price * item.quantity }"></th:with>
+			<tr>
+				<td align="center"><a
+					href="${pageContext.request.contextPath }/cart/remove/${item.product.id }"
+					onclick="confirm('Are you sure?')">Remove</a></td>
+				<td>${item.product.id }</td>
+				<td>${item.product.name }</td>
+				<td><img src="${pageContext.request.contextPath }/resources/http://learningprogramming.net/wp-content/uploads/java/spring_mvc/${item.product.photo }"
+					width="50"></td>
+				<td>${item.product.price }</td>
+				<td>${item.quantity }</td>
+				<td>${item.product.price * item.quantity }</td>
+			</tr>
+		</th:block>
+		<tr>
+			<td colspan="6" align="right">Sum</td>
+			<td>${total }</td>
+		</tr>
+	</table>
+	<br>
+	<a href="/product/index">Continue
+		Shopping</a>
+</body>
+</form>
+</html>

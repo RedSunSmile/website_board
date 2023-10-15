@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<body onload="init();">
+<script language="JavaScript">
+
+var p_num;
+var amount;
+
+function init () {
+    p_num = document.form.p_num.value;
+    amount = document.form.amount.value;
+    document.form.sum.value = p_num;
+    change();
+}
+
+function add () {
+    hm = document.form.amount;
+    hm.value ++ ;
+
+    var sum_ = parseInt(hm.value) * p_num;
+document.getElementById("sum").innerHTML=sum_;
+}
+
+function del () {
+    hm = document.form.amount;
+        if (hm.value > 1) {
+            hm.value -- ;
+            var sum_ = parseInt(hm.value) * p_num;
+document.getElementById("sum").innerHTML=sum_;
+        }
+}
+
+function change () {
+    hm = document.form.amount;
+
+        if (hm.value < 0) {
+            hm.value = 0;
+        }
+    var sum_ = parseInt(hm.value) * p_num;
+document.getElementById("sum").innerHTML=sum_;
+} 
+
+</script>
+
+<form name="form" method="get">
+수량 : <input type=hidden name="p_num" value="5500">
+<input type="text" name="amount" value="1" size="3" onchange="change();"> 
+<input type="button" value=" + " onclick="add();"><input type="button" value=" - " onclick="del();"><br>
+<input type="hidden" name="sum" size="11" readonly>
+금액 : <div id="sum"></div>원
+</form>
+</body>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	 <link rel="stylesheet" href="/resources/css/reg.css">
+	<th:block th:replace="fragments/meta ::metaFragment('공지사항 상세보기', 'false')"></th:block>
+</head>
+<body>
+	<table>
+	<form method="post" action="/notice/noticeModifyProc" id="modifyProcForm">
+	<tr>
+		<td>제목 : <input id="title" type="text" name="title" th:value="${notice.title}"></td>	
+	</tr>
+	<tr>
+		<td>
+		내용 : <input id="content" type="text" name="content" th:value="${notice.content}" style="width:1000px; height:100px;">
+		</td>	
+	</tr>
+	<tr>
+		<td><input type="hidden" name="idx" th:value="${notice.idx}"></td>
+		<td><a th:href="@{/notice/list(nowPage=${search?.nowPage}, searchText=${search?.searchText})}" style="text-decoration-line:none;">목록</a></td>
+		<td><button type="button" id="modifyProcBtn"style="background-color:#FFEB46;color:white;">수정</button></td>
+	</tr>
+	</form>
+	</table>
+</body>
+	<th:block th:replace="fragments/script :: scriptFragment('')"></th:block>
+	<script>
+		$(function(){
+			$("#modifyProcBtn").on("click", function(){
+				if(confirm("수정하시겠습니까")){
+					$("#modifyProcForm").submit();
+				}
+				
+			})
+		})
+	</script>
+</html>

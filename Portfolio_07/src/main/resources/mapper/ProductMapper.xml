@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.co.kr.shop.product.ProductMapper">
+	<!-- 01. 상품 전체 리스트 -->
+	<select id="listProduct" resultType="com.co.kr.shop.product.dto.ProductVO">
+		<![CDATA[
+		SELECT  
+			product_id AS productId
+			, product_name AS productName 
+			, product_price AS productPrice 
+			, product_desc AS productDesc
+			, product_url AS productUrl
+		FROM tbl_product ORDER BY product_name
+			]]>
+	</select>
+	
+	<!-- 02. 상품 상세보기 -->
+	<select id="detailProduct" resultType="com.co.kr.shop.product.dto.ProductVO">
+		<![CDATA[
+		SELECT
+			product_id AS productId 
+			, product_name AS productName 
+			, product_price AS productPrice 
+			, product_desc AS productDesc 
+			, product_url AS productUrl
+		FROM tbl_product 
+		WHERE product_id = #{productId}
+			]]>
+	</select>
+	</mapper>

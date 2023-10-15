@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+
+ table tr{
+	display:inline-block;
+	width:1200px;
+		border-collapse: collapse;
+		border-bottom: 3px solid #c9c1ef;
+
+ 	font-size:20px;
+ 	margin-left:200px;
+ 	margin-top:100px;
+ 	
+}
+
+td{
+	width:1000px;
+
+}
+table button{
+	border:white;
+		border-radius:7%;
+	width:100px;
+	height:40px;
+}
+table img{
+		border-radius:10%;
+		width:500px;
+		height:375px;
+		margin:50px;
+	
+	}
+	table.p{
+	text-align:right;
+	margin-top:-100px;
+	
+	
+}
+
+		

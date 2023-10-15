@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="scriptFragment(useScriptCsrf)">
+		
+	<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+	<!-- <th:block th:replace="fragments/scrollTop :: scrollTopFragment"></th:block> -->
+
+    <!-- Bootstrap core JavaScript-->
+    
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.4/dist/simple-notify.min.js"></script>
+<script
+   src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<th:block th:if="${useScriptCsrf=='true'}">
+<script th:src="@{/resources/js/csrf.js}"></script> 
+
+	</th:block>
+</th:block>
+<th:block layout:fragment="script">
+<script>
+$(function(){ 
+	$("button[name='del_btn']").on("click", function(){
+		const pergolaIdx=$(this).attr("data-ntc-idx");
+		var url="/pergola/pergolaDeleteProc";/* 경로맞추기이거때문에 서버상에에러남!! */
+		var data={
+				"idx" : pergolaIdx
+		};
+		doAjax(url, "DELETE", data, ntcDelCallbackFunc);
+})
+
+	function ntcDelCallbackFunc(){
+		alert("삭제에 성공하였습니다")
+		location.href="/pergola/list";
+	}
+	
+		//	ajax
+		function doAjax(url, type, data, callback) {
+		
+			$.ajax({
+				type: type,	//	POST, DELETE, GET
+				url: url,
+				dataType: "json",
+				data: data == null ? null : JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+				beforeSend: function (xhr) {
+			
+					//$("#loading").show()
+		
+				},
+				success: function (res) {
+					console.log(res)
+					if(callback != null){
+						callback(res)
+					}
+					
+				},
+				error: function (e) {
+					console.log(e)
+					alert("서버 처리중 에러가 발생하였습니다");
+				},
+				complete: function (e) {
+					$("#loading").hide()
+				}
+			});
+		}//	ajax end
+ 	}) 
+ 	</script>
+</th:block>
+</html>

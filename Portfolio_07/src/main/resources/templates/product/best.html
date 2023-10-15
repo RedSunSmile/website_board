@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head profile="http://www.w3.org/2005/10/profile">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Best제품!!</title>
+	<link href="/resources/css/product-result01.css" rel="stylesheet" type="text/css"/>
+		    <link rel="stylesheet" href="/resources/css/read.css">
+    </head>
+    <body>
+    <form action="/product/best" method="get">
+        <div id="container">
+            <h1>Best제품!!</h1>
+            <a href="/admin/index">홈페이지메인</a>
+                <ul class="prod-list">
+                    <li>
+                        <img src="/source/prod1.jpg">
+                        <div class="caption">
+                            <h2>흔들의자</h2>
+                            <p>상품 1 설명 텍스트</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/source/prod2.jpg">
+                        <div class="caption">
+                            <h2>파고라</h2>
+                            <p>상품 2 설명 텍스트</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/source/prod3.jpg">
+                        <div class="caption">
+                            <h2>놀이기구</h2>
+                            <p>상품 3 설명 텍스트</p>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="prod-list2">
+                        <li>
+                        <img src="/source/prod1.jpg">
+                        <div class="caption2">
+                            <h2>용암구 파고라 설치</h2>
+                            <p>상품 1 설명 텍스트</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/source/prod2.jpg">
+                        <div class="caption2">
+                            <h2>수원시 파고라설치</h2>
+                            <p>상품 2 설명 텍스트</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="/source/prod3.jpg">
+                        <div class="caption2">
+                            <h2>일산시청 흔들그네 설치</h2>
+                            <p>상품 3 설명 텍스트</p>
+                        </div>
+                    </li>
+               </ul>
+        </div>
+        </form>
+    </body>
+</html>

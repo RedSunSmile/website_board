@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+
+	    <link rel="stylesheet" href="/resources/css/read.css">
+	<title>Insert title here</title>
+</head>
+<body>
+<table>
+<tr>
+
+	<td>
+		
+		제목 : <input id="title" type="text" name="title" th:value="${notice.title}" readonly>
+	</td>
+</tr>
+<tr>
+	<td>
+		내용 : <input id="content" type="text" name="content" th:value="${notice.content}" style="width:1000px; height:100px;" readonly>
+	</td>
+</tr>
+<tr>
+	<td>
+		작성자 : <input id="redId" type="text" name="regId" th:value="${notice.regId}" readonly>
+	
+	</td>
+</tr>
+<tr>
+	<!--댓글등록기능  -->
+	<td>
+		댓글 : <input id="reply" type="text" name="reply" value="">
+		
+		<button type="button" id="replyBtn"style="font-size:20px; border:white;border-radius:7%;">리플 등록</button>
+		<a  th:href="@{/notice/list(nowPage=${search.nowPage}, searchText=${search.searchText})}" style="text-decoration-line:none;">목록</a>
+		
+		<!-- 게시물의 인덱스 값도 보내줘야 -->
+		<input id="noticeIdx" type="hidden" th:value="${notice.idx}" readonly>
+	</td>
+</tr>	
+	<!-- 댓글 목록보여주기 -->
+
+		<tr>
+			<td style=text-align:center;>내용</td>
+			<td style=text-align:center;>작성자</td>
+			<td style=text-align:center;>작성일자</td>
+		</tr>
+		
+	<!--th:block을 통해 replyList를 각각 반복해서 돌리겠다는말  -->
+		<th:block th:each="replyList: ${reply}"> 
+		<tr>
+			<td>
+				<textarea name="replyTextarea" style="border:1px solid #c9c1ef;">[[${replyList.reply}]]</textarea>
+				<textarea name="oldReplyTextarea" readonly style="display:none;border:1px solid #c9c1ef;">[[${replyList.reply}]]</textarea>
+		
+			<!--style="disply:none;"숨기기  -->
+				[[${replyList.regId}]]
+				[[${replyList.regDt}]]
+		
+	
+		<!-- 만약 parseException:Exception evaluating SpringEl expression:"reply[0].title"이란 에러가 나오면
+		index가 0번부터 시작하는데 왜 1번부터 시작하냐는 말이다 그래서 0번부터 시작하게 맞춰주기위해 밑에내용입력!! 자세한건 메모한거 보기!!-->
+			<th:block th:if="${replyList.regId!=session.AdminId}">
+			<!-- session 사용자id가 같지않아 regId!=memberId는 다르다 -->
+			
+				<input type="text" name="replyIdx" th:value="${replyList.idx}">
+				<button name="replyModifyBtn"style="background-color:#FFEB46;color:white;">수정</button>
+				<button name="replyModifyProcBtn" style="display : none;">저장</button>
+				<button name="replyModifyCancelBtn" style="display : none;">취소</button>
+				<button style="background-color:#e65ae6;color:white;"type="button" name="del_btn" th:data-ntc-idx="${replyList.idx}">삭제</button>
+				
+			</th:block>
+			</td> 
+		</tr>
+	</th:block> 
+</table>
+</body>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>  
+<script>
+	/*  등록하게된다면 기존에 있던것을 지우고 다시 새롭게 불러온다 ex)6번저장할때 1~5번지우고 1~6번보여준다 */ 
+	$(document).ready(function(){
+	
+		$("button[name=replyModifyBtn]").on("click", function(){
+			$(this).parents('tr').find("textarea[name=replyTextarea]").attr('readonly', false);
+			$(this).parent('td').find("button[name=replyModifyProcBtn]").show()
+			$(this).parent('td').find("button[name=replyModifyCancelBtn]").show()
+			$(this).parent('td').find("button[name=replyModifyBtn]").hide();
+		})
+		
+		/* function makeCancelBtnEvt(){}  */
+		//parents는 지정한 상위까지 parent는 상위 까지만
+		$("button[name=replyModifyCancelBtn]").on("click", function(){
+			$(this).parents('tr').find("textarea[name=replyTextarea]").attr('readonly', true);
+			$(this).parent('td').find("button[name=replyModifyProcBtn]").hide()
+			$(this).parent('td').find("button[name=replyModifyCancelBtn]").hide()
+			$(this).parent('td').find("button[name=replyModifyBtn]").show()
+			$(this).parent('td').find("textarea[name=replyTextarea]").val($(this).parents('tr').find("textarea[name=oldReplyTextarea]").val())
+			
+		})
+		
+		
+		
+		//댓글 등록
+		$("#replyBtn").on("click", function(){
+			const noticeIdx=$("#noticeIdx").val()
+			
+			var data={
+				reply : $("#reply").val(),	
+			}
+			
+		doAjax(`/notice/${noticeIdx}/reply`, "post", data, regReply)
+		});
+		
+	function regReply(res){
+			alert("등록 되었습니다");
+			location.reload();
+	}
+	
+	//댓글 수정
+	$("button[name=replyModifyProcBtn]").on("click", function(){
+		//debugger;
+		
+		const noticeIdx= $("#noticeIdx").val()
+		const replyIdx= $(this).parent('td').find("input[name=replyIdx]").val()
+		
+		var data={
+			reply :$(this).parents('tr').find("textarea[name=replyTextarea]").val(),
+			idx : $(this).parent('td').find("input[name=replyIdx]").val()
+		}
+		
+		doAjax(`/notice/${noticeIdx}/reply/${replyIdx}`, "put", data, modReply)
+	})
+	
+	function modReply(res){
+		alert("수정 되었습니다");
+		location.reload();
+	}
+	
+	//댓글삭제
+	$("button[name='del_btn']").on("click",function(){
+		const noticeIdx=$(this).attr("data-ntc-idx");
+		const replyIdx=$(this).parent('td').find("input[name=replyIdx]").val()
+		
+		var data={
+			idx :$(this).parent('td').find("input[name=replyIdx]").val()
+		}
+		doAjax(`/notice/${noticeIdx}/reply/${replyIdx}`, "delete", data, delfunc)
+	});
+	
+	function delfunc(){
+		alert("삭제에 성공하였습니다")
+		location.reload();
+	}
+
+			function doAjax(url, type, data, callback) {
+			
+			$.ajax({
+				type: type,	//	POST, DELETE, GET
+				url: url,
+				dataType: "json",
+				data: data == null ? null : JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+			 	beforeSend: function (xhr) {
+			
+					//$("#loading").show()
+		
+				}, 
+				success: function (res) {
+					console.log(res)
+					if(callback != null){
+						callback(res)
+					}
+					
+				},
+				error: function (e) {
+					if(e.responseJSON.status == 400){
+							alert(e.responseJSON.message)
+						}else{
+							alert("서버 처리중 에러가 발생하였습니다");
+						}
+				},
+				complete: function (e) {
+					$("#loading").hide()
+				}
+			});
+		}//	ajax end
+		
+})
+	
+</script>
+</html>

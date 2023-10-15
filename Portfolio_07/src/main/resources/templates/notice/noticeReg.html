@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    	 
+   <link rel="stylesheet" href="/resources/css/reg.css">
+</head>
+<body>
+
+	<form th:action="@{/notice/noticeReg}" method="post">
+	
+	<table>
+	<tr>
+		<td>
+			제목 : <input id="title" type="text" name="title" value="" style="width:1000px;">
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+		내용 : <input id="content" type="text" name="content" value="" style="width:1000px; height:100px;">
+		</td>
+	</tr>
+	<tr>	
+		<td><div class="reg">
+		<input style="background-color:#FEBEBE;color:white;border-radius:7%;
+		text-decoration-line:none;text-align:center;font-size:20px;"
+		type="button" id="regBtn" value="등록"></input></td>
+		<td><a th:href="@{/notice/list}" style="text-decoration-line:none;text-align:center;">목록</a></td>
+ 	
+		</div>
+		</td>
+	</tr>	
+	</table>
+		
+	</form>
+
+</body>
+</html>

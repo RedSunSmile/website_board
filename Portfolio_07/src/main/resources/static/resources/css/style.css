@@ -1,0 +1,263 @@
+@charset "UTF-8";
+ 
+   /* 100%기준 */
+   /* 첫번째 주메뉴 */
+		#wrap{
+				width:1600px;
+				margin:0px;
+				padding:0;
+	
+				
+			}
+	
+			.box1{
+				margin:0 auto;
+				margin-top:80px; 
+				padding:0;
+				width:1600px;
+				margin-left:200px;
+				height:90px;  
+
+			}
+			
+			/*  맨위메뉴  */
+			.box1{
+					border-collapse:collapse;
+					margin-top:10px;
+					padding:0;
+				
+			} 
+			.box1 td{
+					margin:0;
+					padding:0;		
+					
+			} 
+			
+	/*   두번째 자주찾기 메뉴*/	
+			.box2 li {
+				width:1200px;
+				list-style:none;
+				text-decoration:none;
+				padding:0;
+				font-size:20px;
+				margin-top:450px;
+				margin-left:200px;
+			
+			
+			}
+			/*두번째박스메뉴  */
+			.box2 li { 
+				width:1200px;
+				height:200px;
+				border-top: 5px solid #c9c1ef;
+   				border-collapse: collapse;
+   				border-bottom: 5px solid #c9c1ef;
+  				padding: 10px;
+  				margin-left:200px;
+		
+			}
+			.box2 a{
+				width:200px;
+				height:30px;
+				float:left;
+				margin-left:50px;
+				text-align:center;
+		
+			}
+			.box2 ul img{
+				width:100px;
+				height:100px;
+				margin-top:30px;
+				float:left;
+				margin-left:130px;
+			}
+		
+			.box3 ul img{
+					list-style:none;
+					width:270px;
+					height:200px;
+					margin-left:-35px;
+					z-index:-1;
+			
+				}
+				
+				/*  세번쨰가성비,단종메뉴*/
+				.box3 li {
+				width:1200px;
+				list-style:none;
+				text-decoration:none;
+				padding:0;
+				font-size:20px;
+				margin-top:100px;
+				margin-left:200px;
+			
+			
+			}
+			/*세번째박스메뉴  */
+			.box3 li { 
+				width:1200px;
+				height:300px;
+				border-top: 5px solid #c9c1ef;
+   				border-collapse: collapse;
+   				border-bottom: 5px solid #c9c1ef;
+  				padding: 10px;
+  				margin-left:200px;
+		
+			}
+			.box3 a{
+				width:200px;
+				height:30px;
+				float:left;
+				margin-left:20px;
+		
+			}
+		
+
+			.navi {
+				list-style:none;
+				overflow:hidden;
+			}
+		
+			.navi a:link, .navi a:visited{
+				color:black;
+				font-size:20px;
+				padding:15px;
+				text-decoration:none;
+				text-align:center;
+				margin:0 auto;
+				
+			}
+			.navi a:hover, .navi a:focus{
+				color:black;
+			}
+			.navi a:active{
+				color:#f00;
+			}
+			.menu:after{
+				margin:50px;
+				display:block;
+				content:'';
+				clear:both;
+			}
+			
+			.menu img{
+				width:200px;
+				height:60px;
+			}
+			/* 맨위제품제목 가로길이 */
+			.menu li{
+				width:200px;
+				list-style:none;
+				text-decoration:none;
+				padding:0;
+				font-size:20px;
+			
+			
+			}
+			/*맨위제목메뉴  */
+			.menu>li { 
+				float:left;
+				width:200px;
+				margin-top:60px;
+				padding:0;
+				border-top: 5px solid #c9c1ef;
+   				border-collapse: collapse;
+   				border-bottom: 5px solid #c9c1ef;
+  				padding: 10px;
+		
+			}
+			.menu>li >a {
+				display:block;
+	 			color:black;
+				
+	 		
+	
+			}
+			.menu>li:hover .product_1 {
+				display:block;
+				margin:0;
+			
+			}
+			.menu .product_1 {
+				display:none;
+				color:black;
+				padding:0;
+				margin:0;
+				position:absolute; 
+				z-index:999;
+				}
+				
+				.menu .product_1 a{
+					text-align:center;
+					display:block;
+					color: black;
+			 		background-color:#F2F2F2; 
+				}
+			.menu>li:hover .product_2{
+				display:block;
+				margin:0;
+			
+			}
+			.menu .product_2{
+				display:none;
+				color:black;
+				padding:0;
+				margin:0;
+				position:absolute;/*absolute로 해주니 같이 안내려감  */
+				z-index:999;
+				}
+				
+				.menu .product_2 a{
+					display:block;
+					color: black;
+					background-color:#F2F2F2;
+				}
+			.menu>li:hover .product_3{
+				display:block;
+				margin:0;
+			
+			}
+			.menu .product_3{
+				display:none;
+				color:black;
+				padding:0;
+				margin:0;
+				position:absolute;
+				z-index:999;
+				}
+				
+				.menu .product_3 a{
+					display:block;
+					color: black;
+					background-color:#F2F2F2;
+				}
+	
+			.menu>li:hover .product_4{
+				display:block;
+				margin:0;
+			
+			}
+			.menu .product_4{
+				display:none;
+				color:black;
+				padding:0;
+				margin:0;
+				position:absolute;
+				z-index:999;
+				}
+				
+				.menu .product_4 a{
+					display:block;
+					color: black;
+					background-color:#F2F2F2;
+				}
+	
+				/* 	position:absolute; */ /*위치상부모요소기준으로배치  많이씀!*/
+				
+	/* 이미지돌기 */	
+	*{
+	margin:0;
+	padding:0;
+}
+
+

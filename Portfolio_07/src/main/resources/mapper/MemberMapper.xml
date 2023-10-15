@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.co.kr.member.MemberMapper">
+<!-- 페이징 처리 전체 개수 파악  -->
+	<select id="getMemberTotalCount" parameterType="com.co.kr.member.dto.SearchDto" resultType="int">
+	<![CDATA[
+		select 
+			count(*) 
+		from 
+			member
+		where
+			1=1
+			and member.useYn = 'Y'
+			and (
+						member.id like concat('%', #{searchText}, '%')
+					or  member.address like concat('%', #{searchText}, '%')
+					or  member.email like concat('%', #{searchText}, '%')
+			)
+	]]>
+	</select>
+	
+	<!-- 페이징 처리 목록 검색 -->
+	<select id="getMemberList" parameterType="com.co.kr.member.dto.SearchDto" resultType="com.co.kr.member.dto.MemberDto">
+	<![CDATA[
+		select 
+			@rownum:=@rownum+1 as 'rowNum'
+			, member.id
+			, member.idx
+			, date_format(member.regDt, '%Y-%m-%d %H:%i:%s') as 'regDt'
+			, member.address
+			, member.email
+		from 
+			member, (select @rownum :=0) r 
+		where
+			1=1
+			and member.useYn = 'Y'
+			and (
+						member.id like concat('%', #{searchText}, '%')
+					or  member.address like concat('%', #{searchText}, '%')
+					or  member.email like concat('%', #{searchText}, '%')
+			)
+		order by idx desc	
+		limit #{startNum}, #{listCount}
+	
+	]]>
+	</select>
+	
+		<!-- 회원가입 -->
+		<insert id="insertMember" parameterType="com.co.kr.member.dto.MemberDto">
+			<![CDATA[
+				INSERT INTO member
+						(
+								id
+							, 	password
+							,	name
+							,	email
+							,	address
+							,	useYn
+							,  	regDt
+							,	idx
+						)
+					VALUES	(
+								#{id}
+							,	#{password}
+							,	#{name}
+							,	#{email}
+							, 	#{address}
+							,	#{useYn}
+							,	now()
+							,	#{idx}
+							)
+			]]>
+		</insert>
+		
+		<!-- 회원사항 수정읽기 -->
+	<select id="readMember" resultType="com.co.kr.member.dto.MemberDto">
+	<![CDATA[
+		select id, address, email, regDt
+		from member
+		where idx=#{idx}
+	]]>
+	</select>
+		
+	<!--회원사항 조회(상세보기)  -->
+	<select id="getMemberSee" parameterType="Long" resultType="com.co.kr.member.dto.MemberDto">
+	<![CDATA[
+			select 
+				  id
+				, idx
+				, password
+				, name
+				, address
+				, role_id
+				, useYn
+				, email
+				, regDt
+				, modId
+				, modDt
+			from
+				member
+			where 
+				idx=#{memberIdx}
+				-- and useYn='Y'
+	]]>
+	</select>
+	
+	<!--  회원사항 수정-->
+	<update id="updateMember" parameterType="com.co.kr.member.dto.MemberDto">
+	<![CDATA[
+		UPDATE
+			member
+		SET
+				id=#{id}
+			, idx=#{idx}
+			, password=#{password}
+			, name=#{name}
+			, address=#{address}
+			, email=#{email}
+			, modId=#{modId}
+			, modDt=#{modDt}
+		WHERE
+			idx=#{idx}
+	]]>
+	</update>
+	
+	<!--회원사항 지우기  -->
+	<update id="deleteMember" parameterType="com.co.kr.member.dto.MemberDto">
+	<![CDATA[
+		update
+			member
+		set
+			 useYn= #{useYn}
+			, modId=#{modId}
+			, modDt=#{modDt}
+		WHERE
+			idx= #{idx}
+	]]>
+	</update>
+		<!-- 댓글 등록 -->
+	<insert id="insertReply" parameterType="com.co.kr.member.dto.ReplyDto">
+		<![CDATA[
+		INSERT INTO reply(
+					reply
+				, 	reg_id
+				,	reg_dt
+				, 	notice_idx
+				,	use_yn
+				)
+		VALUES(
+					#{reply}
+				,	#{regId}
+				,	now()
+				,	#{memberIdx}
+				,	'Y'
+			)
+				
+		]]>
+	</insert>
+	
+	<!--댓글 목록  -->
+	<select id="readReply" resultType="com.co.kr.member.dto.ReplyDto">
+	<![CDATA[
+		SELECT
+				idx
+			,	reply
+			,	reg_id as regId
+			,	reg_dt as regDt
+			, 	notice_idx as 'memberIdx'
+		FROM
+				reply
+		WHERE
+				notice_idx = #{memberIdx}
+			and use_yn = 'Y'
+		ORDER BY
+				idx desc
+	]]>
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReplyByReplyIdx" parameterType="com.co.kr.member.dto.ReplyDto">
+	<![CDATA[
+		UPDATE
+				reply
+		SET
+				reply =#{reply}
+			,	mod_id=#{modId}
+			,	mod_dt=#{modDt}
+		WHERE
+				idx=#{idx}
+	]]>
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply" parameterType="com.co.kr.member.dto.ReplyDto">
+	<![CDATA[
+		UPDATE
+				reply
+		SET
+				use_yn=#{useYn}
+			,	mod_id=#{modId}
+		WHERE
+				idx= #{idx}
+	]]>
+	</update>
+	
+	
+		<!--아이디 중복체크  -->
+		<select id="idCheck" resultType="int" parameterType="String">
+			<![CDATA[
+				SELECT
+					count(*)
+				FROM
+					member
+				WHERE
+					id=#{id}
+			]]>
+		</select>
+		
+		<!-- 로그인 -->
+		<select id="login" parameterType="String" resultType="com.co.kr.member.dto.MemberDto">
+		<![CDATA[
+			SELECT 
+			*  
+			FROM
+				MEMBER
+			WHERE
+				id=#{id}
+		]]>
+		</select>
+
+</mapper>
+

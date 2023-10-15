@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="/shop/product/productDetail" method="get">
+<table>
+		<h2>상품 정보</h2>
+		<table border="1">
+			<tr>
+				<td>
+				<img src="/resources/pergola/ADS-116-1.jpg" width="300" height="150">
+			
+				</td>
+			</tr>
+			<td>
+				<table border="1" style="height:300px; width:400px;">
+				
+					<tr align="center">
+						<td>상품명</td>
+						<td>[[${vo.productName}]]</td>
+					</tr>
+					<tr align="center">
+						<td>가격</td>
+						<td>[[${vo.productPrice]]</td>
+					</tr>
+					<tr align="center">
+						<td>상품소개</td>
+						<td>[[${vo.productDesc}]]</td>
+					</tr>
+					<tr align="center">
+						<td colspan="2">
+							<form name="form1" method="post" action="/shop/cart/insert">
+								<input type="hidden" name="productId" value="${vo.productId}">
+								<select name="amount">
+									<th:block begin="1" end="10" var="i">
+										<option value="${i}">${i}</option>
+									</th:block>
+								</select>&nbsp;개
+								<input type="submit" value="장바구니에 담기">
+							</form>
+							<a href="/shop/product/productList">상품목록</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</table>
+</form>
+</html>

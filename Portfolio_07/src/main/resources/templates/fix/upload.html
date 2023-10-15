@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!--  <th:block th:replace="~{fragments/style ::styleFragment}"></th:block>  -->
+<link rel="stylesheet" href="/resources/css/reg.css">  
+</head>
+<body>
+
+
+
+  
+
+<table>
+<form method="POST" action="/fix/upload" enctype="multipart/form-data">
+<tr>
+	 <td><th style="text-align: right"> upload & download</th></td>
+ </tr>
+ <tr>
+ <td><span>Upload</span>
+       <input name="file" type="file" style="border-radius:7%;width:300px;font-size:20px;color:white">
+      <td><label>Choose file</label>
+      <button style="background-color:#E782FF;"type="submit" value="Submit">Submit</button></td>
+      <td>
+		<a th:href="@{/admin/index}"style="text-decoration-line:none;">홈메인으로가기</a>
+	  </td>
+ </tr>       
+ <tr>
+         <div class="form-group row">
+            <div th:if="${warning}">
+               <div class="alert alert-warning" role="alert">
+                <td><h4 th:text="${warning}"></h4></td>
+               </div>
+            </div>
+            <div th:if="${message}">
+               <div class="alert alert-success" role="alert">
+                <td><h4 th:text="${message}"></h4></td>
+               </div>
+            </div>
+            <div th:if="${error}">
+               <div class="alert alert-danger" role="alert">
+                 <td><h4 th:text="${error}"></h4></td>
+               </div>
+            </div>
+         </div>
+</tr>
+      </form>
+    
+            <tr>
+               <th>File Name</th>
+            </tr>
+   
+         <tbody>
+            <tr th:each="list : ${list}">
+               <td th:text="${list}"></td>
+               <td><a
+   th:href="@{http://localhost:8000/fix/download/{name}(name=${list})}">
+   <button style="background-color:#5ABEFF;border:white;"type="button" class="btn btn-success btn-sm">Download</button>
+               </a></td>
+
+               <td>
+                  <form method="POST" action="/fix/delete">
+            <input name="name" type="hidden" th:value="${list}" />
+           <button style="background-color:#FF1493;border:white;"type="submit" class="btn btn-danger btn-sm">
+                        &nbsp;Delete&nbsp;</button>
+                  </form>
+               </td>
+              <td>	<a th:href="@{/fix/fixReg}">글작성으로가기</a></td>
+              
+            </tr>
+         </tbody>
+</table>
+</body>
+<!-- 두개같이 있어야 script코드 작동함!! -->
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.4/dist/simple-notify.min.js"></script>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않게 네임스페이스 기재 -->
+<mapper namespace="com.co.kr.admin.AdminMapper">
+
+
+<!-- 관리자로그인 관련 mapper -->
+<select id="adminlogin" parameterType="String" resultType="com.co.kr.admin.dto.AdminDto">
+	<![CDATA[
+		select 
+			*
+		from 
+			ADMIN
+		where 
+			adminId=#{adminId} 
+	]]>
+</select>
+
+</mapper>

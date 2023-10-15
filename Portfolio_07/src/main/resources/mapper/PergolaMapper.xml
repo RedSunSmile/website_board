@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.co.kr.pergola.PergolaMapper">
+	
+<!-- 페이징 처리 전체 개수 파악  -->
+	<select id="getPergolaTotalCount" parameterType="com.co.kr.pergola.dto.SearchDto" resultType="int">
+	<![CDATA[
+		select 
+			count(*) 
+		from 
+			pergola 
+		where
+			1=1
+			and pergola.use_yn = 'Y'
+			and (
+						pergola.title like concat('%', #{searchText}, '%')
+					or  pergola.reg_id like concat('%', #{searchText}, '%')
+					or  pergola.content like concat('%', #{searchText}, '%')
+			)
+	]]>
+	</select>
+	
+	<!-- 페이징 처리 목록 검색 -->
+	<select id="getPergolaList" parameterType="com.co.kr.pergola.dto.SearchDto" resultType="com.co.kr.pergola.dto.PergolaDto">
+	<![CDATA[
+		select 
+			@rownum:=@rownum+1 as 'rowNum'
+			, pergola.idx
+			, pergola.title
+			, date_format(pergola.reg_dt, '%Y-%m-%d %H:%i:%s') as 'regDt'
+			, pergola.reg_id as 'regId'
+			, pergola.content
+		from 
+			pergola, (select @rownum :=0) r 
+		where
+			1=1
+			and pergola.use_yn = 'Y'
+			and (
+						pergola.title like concat('%', #{searchText}, '%')
+					or  pergola.reg_id like concat('%', #{searchText}, '%')
+					or  pergola.content like concat('%', #{searchText}, '%')
+			)
+		order by idx desc	
+		limit #{startNum}, #{listCount}
+	
+	]]>
+	</select>
+	
+	<!-- 공지사항등록 -->
+	<insert id="insertPergola" parameterType="com.co.kr.pergola.dto.PergolaDto">
+	<![CDATA[
+		insert into pergola 
+		(
+			 title
+			,content
+			,reg_dt
+			,reg_id
+			,use_yn
+			)
+		values
+		(
+			
+			 #{title}
+			,#{content}
+			,now()
+			,#{regId} 
+			,#{useYn}
+		)
+	]]>		
+	</insert>
+	
+	<!-- 공지사항 수정읽기 -->
+	<select id="readPergola" resultType="com.co.kr.pergola.dto.PergolaDto">
+	<![CDATA[
+		select title, content, regId, regDt
+		from pergola
+		where idx=#{idx}
+	]]>
+	</select>
+	
+	<!--공지사항 조회(상세보기)  -->
+	<select id="getPergolaSee" parameterType="Long" resultType="com.co.kr.pergola.dto.PergolaDto">
+	<![CDATA[
+			select 
+				  idx
+				, title
+				, content
+				, reg_id as 'regId'
+				, reg_dt as 'regDt'
+				, use_yn as 'useYn'
+			from
+				pergola
+			where 
+				idx=#{pergolaIdx}
+				-- and use_yn='Y'
+	]]>
+	</select>
+	<!--  공지사항 수정-->
+	<update id="updatePergola" parameterType="com.co.kr.pergola.dto.PergolaDto">
+	<![CDATA[
+		UPDATE
+			pergola
+		SET
+			title=#{title}
+			, content=#{content}
+			, mod_dt=#{modDt}
+			, mod_id=#{modId}
+		WHERE
+			idx=#{idx}
+	]]>
+	</update>
+	
+	<!--공지사항 지우기  -->
+	<update id="deletePergola" parameterType="com.co.kr.pergola.dto.PergolaDto">
+	<![CDATA[
+		update
+			pergola
+		set
+			mod_dt= #{modDt}
+		,	mod_id= #{modId}
+		, 	use_yn= #{useYn}
+		WHERE
+			idx= #{idx}
+	]]>
+	</update>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertReply" parameterType="com.co.kr.pergola.dto.ReplyDto">
+		<![CDATA[
+		INSERT INTO reply(
+					reply
+				, 	reg_id
+				,	reg_dt
+				, 	notice_idx
+				,	use_yn
+				)
+		VALUES(
+					#{reply}
+				,	#{regId}
+				,	now()
+				,	#{pergolaIdx}
+				,	'Y'
+			)
+				
+		]]>
+	</insert>
+	
+	<!--댓글 목록  -->
+	<select id="readReply" resultType="com.co.kr.pergola.dto.ReplyDto">
+	<![CDATA[
+		SELECT
+				idx
+			,	reply
+			,	reg_id as regId
+			,	reg_dt as regDt
+			, 	notice_idx as 'pergolaIdx'
+		FROM
+				reply
+		WHERE
+				pergola_idx = #{pergolaIdx}
+			and use_yn = 'Y'
+		ORDER BY
+				idx desc
+	]]>
+	</select>
+	<!-- 댓글 수정 -->
+	<update id="updateReplyByReplyIdx" parameterType="com.co.kr.pergola.dto.ReplyDto">
+	<![CDATA[
+		UPDATE
+				reply
+		SET
+				reply =#{reply}
+			,	mod_id=#{modId}
+			,	mod_dt=#{modDt}
+		WHERE
+				idx=#{idx}
+	]]>
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply" parameterType="com.co.kr.pergola.dto.ReplyDto">
+	<![CDATA[
+		UPDATE
+				reply
+		SET
+				use_yn=#{useYn}
+			,	mod_id=#{modId}
+		WHERE
+				idx= #{idx}
+	]]>
+	</update>
+	
+</mapper>
